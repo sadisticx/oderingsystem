@@ -1,7 +1,11 @@
 package FoodOrderingSystem;
+import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +14,43 @@ import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.*;
 
-public class OrderSystem extends JFrame {
+public class OrderingFrame extends JFrame implements ActionListener{
 	
 		
 		JPanel sidesPanel = new JPanel();
 		JPanel mainPanel = new JPanel();
 		JPanel detailPanel = new JPanel();
 		JPanel drinksPanel = new JPanel();
-		
+		JPanel dinePanel = new JPanel();
 		
 		//label components
 		JLabel sideslbl = new JLabel();
 		JLabel mainlbl = new JLabel();
 		JLabel drinkslbl = new JLabel();
-		//
-		OrderSystem(){
+		
+		//radio button
+		JRadioButton rbDineIn = new JRadioButton();
+		JRadioButton rbTakeOut = new JRadioButton();
+		
+		
+		ButtonGroup btngroup = new ButtonGroup();
+		
+		DefaultListModel<String> modelPrice = new DefaultListModel<String>();
+		DefaultListModel<String> modelList = new DefaultListModel<String>();
+		JList itemList = new JList<String>(modelList);
+		JScrollPane scroll = new JScrollPane(itemList);
+		
+		String[] items = {"Hamburger", "Fries", "Bacon", "Ramen", "Hotdog",};
+		JCheckBox[] checkBoxes = new JCheckBox[items.length];
+		double menuPrice[] = {69.0, 727.0, 23.0, 23.0, 343.0};
+		
+		JTextField txtAmount = new JTextField();
+		JTextField txtPayment = new JTextField();
+		JButton btnBuy = new JButton();
+		double price = 0;
+		
+		
+		OrderingFrame(){
 			this.setSize(1300, 720);
 			this.setLocationRelativeTo(null);
 	        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,13 +79,15 @@ public class OrderSystem extends JFrame {
 	        sideslbl.setFont(sideslbl.getFont().deriveFont(20f)); // Set font size to your liking
 
 	        
-	        // Define an array with the specific items
-	        String[] items = {"Hamburger", "Fries", "Bacon", "Ramen"};
-	        JCheckBox[] checkBoxes = new JCheckBox[items.length];
+	        // Array
+	        
+	        
+	       
 	        int verticalSpacing = 30; // The vertical space between each checkbox
 	        							
 	        for (int i = 0; i < items.length; i++) {
-	            // Initialize each JCheckBox with the text from the items array
+	        	
+	        	// Initialize JCheckBox with the text from the items array
 	            checkBoxes[i] = new JCheckBox(items[i]);
 	            
 	            // Set bounds for each JCheckBox: x, y, width, height
@@ -67,6 +95,23 @@ public class OrderSystem extends JFrame {
 	            
 	            // Add the JCheckBox to the coursePanel
 	            sidesPanel.add(checkBoxes[i]);
+	            checkBoxes[i].addActionListener(this);
+	        }
+	        
+	        
+	        JLabel[] pricelbl = new JLabel[menuPrice.length];
+	        
+	        verticalSpacing = 30; // The vertical space between each checkbox
+	        							
+	        for (int i = 0; i < menuPrice.length; i++) {
+	        	
+	        	// Initialize JCheckBox with the text from the items array
+	        	pricelbl[i] = new JLabel(String.valueOf(menuPrice[i]));
+	            // Set bounds for each JCheckBox: x, y, width, height
+	        	pricelbl[i].setBounds(150, (i * verticalSpacing) + 50, 100, 25);
+	            
+	            // Add the JCheckBox to the coursePanel
+	            sidesPanel.add(pricelbl[i]);
 	        }
 
 	        // Refresh the panel to display the checkboxes
@@ -74,10 +119,16 @@ public class OrderSystem extends JFrame {
 	        sidesPanel.repaint();
 	        
 	        
-	        ImageIcon burger = new ImageIcon("burger.png");
+	    //    ImageIcon burger = new ImageIcon("burger.png");
 	      
-	       
+	       //dine panel
+	        this.add(dinePanel);
 	        
+	        dinePanel.setBounds(20, 70, 200 ,50);
+	        dinePanel.setFocusable(false);
+	        dinePanel.setLayout(null);
+	        
+	       
 	        //main panel
 	        
 	        this.add(mainPanel);
@@ -85,13 +136,25 @@ public class OrderSystem extends JFrame {
 	        mainPanel.setLayout(null);
 	        blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
 	        mainPanel.setBorder(blackBorder);
-	     
+	        mainPanel.setBackground(Color.pink);
 	        mainPanel.add(mainlbl);
 	        mainlbl.setBounds(20, -20, 200, 100);
 	        mainlbl.setText("Main Dishes");
 	        mainlbl.setFont(mainlbl.getFont().deriveFont(20f)); // Set font size to ur liking
 
+	        mainPanel.add(rbDineIn);	        
+	        rbDineIn.setText("Dine In");
+	        rbDineIn.setBounds(20, 70, 200 ,50);
+	        rbDineIn.setFocusable(false);
 	        
+	        mainPanel.add(rbTakeOut);	        
+	        rbTakeOut.setText("Take Out");
+	        rbTakeOut.setBounds(100, 70, 200 ,50);
+	        rbTakeOut.setFocusable(false);
+	        
+	        
+	        btngroup.add(rbDineIn);
+	        btngroup.add(rbTakeOut);
 	        //drinks panel
 	        
 	        this.add(drinksPanel);
@@ -108,17 +171,68 @@ public class OrderSystem extends JFrame {
 	        //order detail panel
 	        
 	        this.add(detailPanel);
-	        detailPanel.setBounds(970, 20, 300 ,645);
-	        detailPanel.setLayout(null);
-	        blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
-	        detailPanel.setBorder(blackBorder);
-	   
-		
+	        detailPanel.setBounds(960, 20, 305 ,645);
+	        //detailPanel.setLayout(null);
+	        //blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
+	        //detailPanel.setBorder(blackBorder);
+	        detailPanel.setLayout(new BorderLayout());
+	        detailPanel.add(scroll);
+	       
+	        mainPanel.add(btnBuy);
+	        mainPanel.add(txtAmount);
+	        mainPanel.add(txtPayment);
+	        btnBuy.setBounds(20, 400, 150, 50);
+	        btnBuy.setText("Purchase");
+	        btnBuy.setFocusable(false);
+	        btnBuy.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(modelList.isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Please select Order!");
+					}else if (txtPayment.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Please select Payment!");
+					}else {
+						double amount = Double.parseDouble(txtAmount.getText());
+						double payment = Double.parseDouble(txtPayment.getText());;
+						if (payment < amount) {
+							JOptionPane.showMessageDialog(null, "Please enter the right amount");
+						}else {
+							JDialog dialog = new JDialog(null, Dialog.DEFAULT_MODALITY_TYPE);
+							//dialog.setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+							dialog.setSize(330, (modelList.getSize() * 20) + 340);
+							dialog.setLocationRelativeTo(null);
+							dialog.setUndecorated(true);
+							dialog.setVisible(true);
+						}
+					}
+					
+				}});
 	        
-		
-	
-	
-	
+	        txtAmount.setBounds(20, 250, 200, 50);
+	        txtAmount.setEditable(false);
+	        txtAmount.setOpaque(false);
+	        
+	        txtPayment.setBounds(20, 200, 200, 50);
+		}
+
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		    for (int i = 0; i < items.length; i++) {
+		        if (e.getSource() == checkBoxes[i]) {
+		            if (checkBoxes[i].isSelected()) {
+		                modelList.addElement(checkBoxes[i].getText());
+		                modelPrice.addElement(String.valueOf(menuPrice[i]));
+		                price += menuPrice[i];
+		            } else {
+		                // If the checkbox is deselected, remove the item from the list
+		                modelList.removeElement(checkBoxes[i].getText());
+		                modelPrice.removeElement(String.valueOf(menuPrice[i]));
+		                price -= menuPrice[i];
+		            }
+		        }		txtAmount.setText(String.valueOf(price));
+		    }
 		}
 
 }
