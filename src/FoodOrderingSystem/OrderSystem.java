@@ -17,17 +17,19 @@ import javax.swing.*;
 public class OrderingFrame extends JFrame implements ActionListener{
 	
 		
+		JPanel dinePanel = new JPanel();
 		JPanel sidesPanel = new JPanel();
 		JPanel mainPanel = new JPanel();
 		JPanel detailPanel = new JPanel();
 		JPanel drinksPanel = new JPanel();
-		JPanel dinePanel = new JPanel();
-		
+		JPanel checkPanel = new JPanel();
 		//label components
 		JLabel sideslbl = new JLabel();
 		JLabel mainlbl = new JLabel();
 		JLabel drinkslbl = new JLabel();
 		
+		JLabel total = new JLabel();
+		JLabel payment = new JLabel();
 		//radio button
 		JRadioButton rbDineIn = new JRadioButton();
 		JRadioButton rbTakeOut = new JRadioButton();
@@ -37,8 +39,10 @@ public class OrderingFrame extends JFrame implements ActionListener{
 		
 		DefaultListModel<String> modelPrice = new DefaultListModel<String>();
 		DefaultListModel<String> modelList = new DefaultListModel<String>();
+		
 		JList itemList = new JList<String>(modelList);
 		JScrollPane scroll = new JScrollPane(itemList);
+		
 		
 		String[] items = {"Hamburger", "Fries", "Bacon", "Ramen", "Hotdog",};
 		JCheckBox[] checkBoxes = new JCheckBox[items.length];
@@ -58,9 +62,9 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        this.setResizable(false);	
 	        this.getContentPane().setBackground(Color.decode("#2d3e50"));
 	        
+	       
 	        this.setLayout(null);
 	        this.setVisible(true);
-	      
 		/*	 bg panel this.add(mainPanel); mainPanel.setBounds(0, 0, 1300, 720);
 			 mainPanel.setBackground(Color.decode("#2d3e50")); */
 			 
@@ -81,53 +85,49 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        
 	        // Array
 	        
-	        
-	       
-	        int verticalSpacing = 30; // The vertical space between each checkbox
-	        							
+	        int verticalSpacing = 30; // The vertical space between each checkbox			
 	        for (int i = 0; i < items.length; i++) {
-	        	
 	        	// Initialize JCheckBox with the text from the items array
 	            checkBoxes[i] = new JCheckBox(items[i]);
-	            
 	            // Set bounds for each JCheckBox: x, y, width, height
 	            checkBoxes[i].setBounds(10, (i * verticalSpacing) + 50, 100, 25);
-	            
 	            // Add the JCheckBox to the coursePanel
 	            sidesPanel.add(checkBoxes[i]);
 	            checkBoxes[i].addActionListener(this);
 	        }
 	        
-	        
 	        JLabel[] pricelbl = new JLabel[menuPrice.length];
-	        
-	        verticalSpacing = 30; // The vertical space between each checkbox
-	        							
+	        verticalSpacing = 30; // The vertical space between each checkbox					
 	        for (int i = 0; i < menuPrice.length; i++) {
-	        	
 	        	// Initialize JCheckBox with the text from the items array
 	        	pricelbl[i] = new JLabel(String.valueOf(menuPrice[i]));
 	            // Set bounds for each JCheckBox: x, y, width, height
 	        	pricelbl[i].setBounds(150, (i * verticalSpacing) + 50, 100, 25);
-	            
 	            // Add the JCheckBox to the coursePanel
 	            sidesPanel.add(pricelbl[i]);
 	        }
-
 	        // Refresh the panel to display the checkboxes
 	        sidesPanel.revalidate();
 	        sidesPanel.repaint();
-	        
-	        
 	    //    ImageIcon burger = new ImageIcon("burger.png");
-	      
-	       //dine panel
+	     // dine panel
 	        this.add(dinePanel);
-	        
-	        dinePanel.setBounds(20, 70, 200 ,50);
+	        dinePanel.setBounds(20, 80, 245 ,50);
 	        dinePanel.setFocusable(false);
 	        dinePanel.setLayout(null);
-	        
+
+	        rbDineIn.setText("Dine In");
+	        rbDineIn.setBounds(20, 0, 100 ,50);
+	        rbDineIn.setFocusable(false);
+	        dinePanel.add(rbDineIn);
+
+	        rbTakeOut.setText("Take Out");
+	        rbTakeOut.setBounds(120, 0, 100 ,50);
+	        rbTakeOut.setFocusable(false);
+	        dinePanel.add(rbTakeOut);
+
+	        btngroup.add(rbDineIn);
+	        btngroup.add(rbTakeOut);
 	       
 	        //main panel
 	        
@@ -142,19 +142,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        mainlbl.setText("Main Dishes");
 	        mainlbl.setFont(mainlbl.getFont().deriveFont(20f)); // Set font size to ur liking
 
-	        mainPanel.add(rbDineIn);	        
-	        rbDineIn.setText("Dine In");
-	        rbDineIn.setBounds(20, 70, 200 ,50);
-	        rbDineIn.setFocusable(false);
-	        
-	        mainPanel.add(rbTakeOut);	        
-	        rbTakeOut.setText("Take Out");
-	        rbTakeOut.setBounds(100, 70, 200 ,50);
-	        rbTakeOut.setFocusable(false);
-	        
-	        
-	        btngroup.add(rbDineIn);
-	        btngroup.add(rbTakeOut);
+	      
 	        //drinks panel
 	        
 	        this.add(drinksPanel);
@@ -171,17 +159,33 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        //order detail panel
 	        
 	        this.add(detailPanel);
-	        detailPanel.setBounds(960, 20, 305 ,645);
+	        detailPanel.setBounds(960, 20, 305 ,450);
 	        //detailPanel.setLayout(null);
 	        //blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
 	        //detailPanel.setBorder(blackBorder);
 	        detailPanel.setLayout(new BorderLayout());
 	        detailPanel.add(scroll);
 	       
-	        mainPanel.add(btnBuy);
-	        mainPanel.add(txtAmount);
-	        mainPanel.add(txtPayment);
-	        btnBuy.setBounds(20, 400, 150, 50);
+	        this.add(checkPanel);
+	        checkPanel.setBounds(960, 485, 305 ,180);
+	        checkPanel.setLayout(null);
+	        blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
+	        checkPanel.setBorder(blackBorder);
+	       
+	        
+	        checkPanel.add(btnBuy);
+	        checkPanel.add(txtAmount);
+	        checkPanel.add(txtPayment);
+	        checkPanel.add(total);
+	        total.setBounds(10, 10, 200, 50);
+	        total.setText("Total:");
+	        total.setFont(new Font ("Times New Roman", Font.BOLD, 30));
+	        checkPanel.add(payment);
+	        payment.setBounds(10, 50, 200, 50);
+	        payment.setText("Payment:");
+	        payment.setFont(new Font ("Times New Roman", Font.BOLD, 30));
+	        
+	        btnBuy.setBounds(55, 115, 200, 50);
 	        btnBuy.setText("Purchase");
 	        btnBuy.setFocusable(false);
 	        btnBuy.addActionListener(new ActionListener(){
@@ -209,11 +213,11 @@ public class OrderingFrame extends JFrame implements ActionListener{
 					
 				}});
 	        
-	        txtAmount.setBounds(20, 250, 200, 50);
+	        txtAmount.setBounds(140, 10, 150, 40);
 	        txtAmount.setEditable(false);
 	        txtAmount.setOpaque(false);
 	        
-	        txtPayment.setBounds(20, 200, 200, 50);
+	        txtPayment.setBounds(140, 60, 150, 40);
 		}
 
 
@@ -233,6 +237,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 		            }
 		        }		txtAmount.setText(String.valueOf(price));
 		    }
+
 		}
 
 }
