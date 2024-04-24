@@ -72,45 +72,48 @@ public class OrderingFrame extends JFrame implements ActionListener{
 			    "Buttered Peas",
 			    "Pasta Salad"};
 		JCheckBox[] sideDishCheckBoxes = new JCheckBox[items.length];
-		double menuPrice[] = {3.99,   // Mashed Potatoes
-			    2.49,   // Steamed Vegetables
-			    1.99,   // Coleslaw
-			    2.99,   // Garlic Bread
-			    3.49,   // Rice Pilaf
-			    2.79,   // Baked Beans
-			    2.49,   // French Fries
-			    4.29,   // Garden Salad
-			    1.99,   // Corn on the Cob
-			    4.99,   // Macaroni and Cheese
-			    3.49,   // Fruit Salad
-			    2.99,   // Roasted Carrots
-			    2.29,   // Sautéed Spinach
-			    1.79,   // Buttered Peas
-			    3.29    // Pasta Salad
+		double menuPrice[] = {80.00,  // Mashed Potatoes
+			    90.00,  // Steamed Vegetables
+			    70.00,  // Coleslaw
+			    60.00,  // Garlic Bread
+			    95.00, // Rice Pilaf
+			    75.00,  // Baked Beans
+			    55.00,  // French Fries
+			    95.00,  // Garden Salad
+			    65.00,  // Corn on the Cob
+			    80.00, // Macaroni and Cheese
+			    85.00, // Fruit Salad
+			    70.00,  // Roasted Carrots
+			    80.00,  // Sautéed Spinach
+			    75.00,  // Buttered Peas
+			    90.00   // Pasta Salad
 				};
 		//drinks
 		double[] drinkPrices = {
-			    1.99,   // Engine Oil
-			    2.49,   // Coolant/Antifreeze
-			    3.99,   // Brake Fluid
-			    2.99,   // Transmission Fluid
-			    1.79,   // Power Steering Fluid
-			    0.99,   // Windshield Washer Fluid
-			    2.29,   // Battery Fluid
-			    3.79,   // Differential Fluid
-			    4.49    // Fuel
+				150.00, // Tropical Tango Smoothie
+			    120.00, // Mint Mojito Madness
+			    100.00, // Caramel Cold Brew
+			    130.00, // Berry Blast Lemonade
+			    110.00, // Ginger Zing Tea
+			    160.00, // Pineapple Paradise Slush
+			    140.00, // Coconut Chai Latte
+			    115.00, // Pomegranate Punch
+			    125.00, // Sizzling Citrus Cooler
+			    135.00  // Vanilla Bean Frappe
 			};
+
 		
 		String[] drinks = {
-				"Engine Oil",
-			    "Coolant/Antifreeze",
-			    "Brake Fluid",
-			    "Transmission Fluid",
-			    "Power Steering Fluid",
-			    "Windshield Washer Fluid",
-			    "Battery Fluid",
-			    "Differential Fluid",
-			    "Fuel"
+				 "Tropical Tango Smoothie",
+				    "Mint Mojito Madness",
+				    "Caramel Cold Brew",
+				    "Berry Blast Lemonade",
+				    "Ginger Zing Tea",
+				    "Pineapple Paradise Slush",
+				    "Coconut Chai Latte",
+				    "Pomegranate Punch",
+				    "Sizzling Citrus Cooler",
+				    "Vanilla Bean Frappe"
 				};
 		  JCheckBox[] drinkCheckBoxes = new JCheckBox[drinks.length];
 		
@@ -328,6 +331,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	     
 	        drinksPanel.revalidate();
 	        drinksPanel.repaint();
+	        
 	        //order label panel
 	       
 	        this.add(orderPanel);
