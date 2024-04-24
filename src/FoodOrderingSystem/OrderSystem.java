@@ -124,16 +124,27 @@ public class OrderingFrame extends JFrame implements ActionListener{
 				    "Truffle Risotto",
 				    "Grilled Sea Bass",
 				    "Duck Confit",
-				    "Rack of Lamb"
+				    "Rack of Lamb",
+				    "Beef Wellington",
+				    "Seafood Risotto",
+				    "Veal Oscar",
+				    "Truffle Risotto",
+				    "Lamb Shank Osso Buco"
 				};
-		  double[] mainPrices= {
-				    1899.99,   // Filet Mignon
-				    2499.50,   // Lobster Tail
-				    1299.75,   // Truffle Risotto
-				    1799.25,   // Grilled Sea Bass
-				    1499.00,   // Duck Confit
-				    1999.80    // Rack of Lamb
+		  double[] mainPrices = {
+				    1699.99,    // Filet Mignon
+				    2299.99,    // Lobster Tail
+				    1199.99,    // Truffle Risotto
+				    1699.99,    // Grilled Sea Bass
+				    1399.99,    // Duck Confit
+				    1899.99,    // Rack of Lamb
+				    2199.99,    // Beef Wellington
+				    1599.99,    // Seafood Risotto
+				    1799.99,    // Veal Oscar
+				    1199.99,    // Truffle Risotto
+				    1699.99     // Lamb Shank Osso Buco
 				};
+
 		  JCheckBox[] mainCheckBoxes = new JCheckBox[mainDish.length];
 		  
 		JTextField txtAmount = new JTextField();
@@ -179,6 +190,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	            sideDishCheckBoxes[i] = new JCheckBox(items[i]);
 	            sideDishCheckBoxes[i].setOpaque(false);
 	            sideDishCheckBoxes[i].setBounds(10, (i * verticalSpacing) + 50, 200, 25);
+	            sideDishCheckBoxes[i].setFont(new Font("Arial", Font.BOLD, 13)); // Set font size to 16
 	            sidesPanel.add(sideDishCheckBoxes[i]);
 	            sideDishCheckBoxes[i].addActionListener(this);
 	        }
@@ -190,6 +202,8 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        	pricelbl[i] = new JLabel(String.valueOf(menuPrice[i]));
 	            // Set bounds for each JCheckBox: x, y, width, height
 	        	pricelbl[i].setBounds(200, (i * verticalSpacing) + 50, 100, 25);
+	        	pricelbl[i].setFont(new Font("Arial", Font.BOLD, 13)); // Set font size to 16
+
 	            // Add the JCheckBox to the coursePanel
 	            sidesPanel.add(pricelbl[i]);
 	        }
@@ -205,12 +219,12 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        header.setLayout(null);
 	        header.setBackground(Color.decode("#fff7cb"));
 	        header.setBorder(blackBorder);
-	        blackBorder = BorderFactory.createLineBorder(Color.BLACK, 5);
+	        blackBorder = BorderFactory.createLineBorder(Color.BLACK, 4);
 	        
 	        header.add(headerlbl);
 	        headerlbl.setText("Hutao's Fine Dining on Teyvat");
-	        headerlbl.setBounds(40, 30, 1000 ,50);
-	        headerlbl.setFont(new Font ("Times New Roman", Font.BOLD, 45));
+	        headerlbl.setBounds(35, 5, 1000 ,100);
+	        headerlbl.setFont(new Font ("Bahnschrift SemiCondensed", Font.ITALIC, 45));
 	        //ordering options panel
 	        
 	        this.add(options);
@@ -270,22 +284,24 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        JLabel imgMignon = new JLabel(filetMignon);
 	        mainPanel.add(imgMignon);
 	        */
-	        verticalSpacing = 30; // The vertical space between each checkbox
+	        verticalSpacing = 41; // The vertical space between each checkbox
 	        for (int i = 0; i < mainDish.length; i++) {
 	        	mainCheckBoxes[i] = new JCheckBox(mainDish[i]);
 	        	mainCheckBoxes[i].setOpaque(false);
-	        	mainCheckBoxes[i].setBounds(10, (i * verticalSpacing) + 50, 200, 25);
-	            mainPanel.add(mainCheckBoxes[i]);
+	        	mainCheckBoxes[i].setBounds(10, (i * verticalSpacing) + 50, 250, 25);
+	            mainCheckBoxes[i].setFont(new Font("Arial", Font.BOLD, 16)); // Set font size to 16
+	        	mainPanel.add(mainCheckBoxes[i]);
 	            mainCheckBoxes[i].addActionListener(this);
 	        }
 	        
 	        JLabel[] mainlbl = new JLabel[mainPrices.length];
-	        verticalSpacing = 30; // The vertical space between each checkbox					
+	        verticalSpacing = 41; // The vertical space between each checkbox					
 	        for (int i = 0; i < mainPrices.length; i++) {
 	        	// Initialize JCheckBox with the text from the items array
 	        	mainlbl[i] = new JLabel(String.valueOf(mainPrices[i]));
 	            // Set bounds for each JCheckBox: x, y, width, height
-	        	mainlbl[i].setBounds(350, (i * verticalSpacing) + 50, 100, 25);
+	        	mainlbl[i].setBounds(330, (i * verticalSpacing) + 50, 250, 25);
+	            mainlbl[i].setFont(new Font("Arial", Font.BOLD, 16)); // Set font size to 16
 	            // Add the JCheckBox to the coursePanel
 	            mainPanel.add(mainlbl[i]);
 	        }
@@ -306,6 +322,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	            drinkCheckBoxes[i] = new JCheckBox(drinks[i]);
 	            drinkCheckBoxes[i].setOpaque(false);
 	            drinkCheckBoxes[i].setBounds(10, (i * verticalSpacing) + 50, 200, 25);
+	            drinkCheckBoxes[i].setFont(new Font("Arial", Font.BOLD, 13)); // Set font size to 16
 	            drinksPanel.add(drinkCheckBoxes[i]);
 	            drinkCheckBoxes[i].addActionListener(this);
 	        }
@@ -319,7 +336,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 
 	            // Set the bounds for each JLabel: x, y, width, height
 	            drinkPriceLabels[i].setBounds(200, (i * verticalSpacing) + 50, 100, 25);
-
+	            drinkPriceLabels[i].setFont(new Font("Arial", Font.BOLD, 13)); // Set font size to 16
 	            // Add the JLabel to the drinksPanel
 	            drinksPanel.add(drinkPriceLabels[i]);
 	        }
