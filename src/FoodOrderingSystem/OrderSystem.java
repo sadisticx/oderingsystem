@@ -7,7 +7,9 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.border.Border;
@@ -153,6 +155,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 		JTextField txtAmount = new JTextField();
 		JTextField txtPayment = new JTextField();
 		JButton btnBuy = new JButton();
+		JButton cancel = new JButton();
 		
 		JTextField boxDiscount = new JTextField();
 		JTextField boxChange = new JTextField();
@@ -394,6 +397,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        checkPanel.setBorder(blackBorder);
 	       
 	        checkPanel.add(btnBuy);
+	        checkPanel.add(cancel);
 	        checkPanel.add(txtAmount); 
 	        checkPanel.add(txtPayment);
 	        checkPanel.add(boxDiscount);
@@ -448,7 +452,7 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        rbSenior.setFocusable(false);
 	        discountGroup.add(rbSenior);
 	        
-	      //button discounts
+	        //button discounts
 	        rbStudent.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
@@ -479,13 +483,21 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	            }
 	        });
 
-
 	        
-	        btnBuy.setBounds(55, 270, 200, 40);
+	        
+	        
+	        
+	        cancel.setBounds(15, 270, 130, 40);
+	        cancel.setText("Cancel");
+	        cancel.setBackground(Color.decode("#E6D5B8"));
+	        cancel.setFocusable(false);
+	        
+	        btnBuy.setBounds(160, 270, 130, 40);
 	        btnBuy.setText("Purchase");
 	        btnBuy.setBackground(Color.decode("#E6D5B8"));
 	        btnBuy.setFocusable(false);
 	        btnBuy.addActionListener(new ActionListener(){
+
 
 	        	@Override
 	        	public void actionPerformed(ActionEvent e) {
@@ -519,8 +531,105 @@ public class OrderingFrame extends JFrame implements ActionListener{
 	        	            
 	        	            // Open the receipt
 	        	            JDialog dialog = new JDialog(null, Dialog.DEFAULT_MODALITY_TYPE);
-	        	            dialog.setSize(330, (modelList.getSize() * 20) + 340);
+	        	            JPanel pOrder = new JPanel();
+	        	            JLabel[] lblItem = new JLabel[modelList.getSize()];
+ 	        	            
+	        	            
+	        	            
+	        	            // the receipt itself
+	        	            dialog.setSize(350, (modelList.getSize() * 40) + 250);
 	        	            dialog.setLocationRelativeTo(null);
+	        	            
+	        	            int y = 200;
+	        	            for(int i = 0; i < modelList.getSize(); i++ ) {
+	        	            	lblItem[i] = new JLabel();
+	        	            	lblItem[i].setBounds(20, y, 150, 30);
+	        	            	lblItem[i].setText(modelList.elementAt(i));
+	        	            	pOrder.add(lblItem[i]);
+	        	            	
+	        	            	lblItem[i] = new JLabel();
+	        	            	lblItem[i].setBounds(275, y, 150, 30);
+	        	            	lblItem[i].setText(modelPrice.elementAt(i));
+	        	            	pOrder.add(lblItem[i]);
+	        	            	y +=30;
+	        	            }
+	        	            
+	        	            //panel ng receipt
+	        	            pOrder.setBackground(Color.white);
+	        	            pOrder.setLayout(null);
+	        	            
+	        	            JLabel shopname = new JLabel();
+	        	            pOrder.add(shopname);
+	        	            shopname.setBounds(23, -70, 500, 200);
+	        	            shopname.setText("Hutao's Fine Dining on Teyvat");
+	        	            shopname.setFont(new Font ("Times New Roman", Font.BOLD, 23));
+	        	            
+	        	            JLabel dine = new JLabel();
+	        	            pOrder.add(dine);
+	        	            dine.setBounds(20, -30, 500, 200);
+	        	            dine.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+
+	        	            // type of order
+	        	            if (rbDineIn.isSelected()) {
+	        	                dine.setText("Type of Order: Dine In");
+	        	            } else if (rbTakeOut.isSelected()) {
+	        	                dine.setText("Type of Order: Take Out");
+	        	            } else {
+	        	                dine.setText("Type of Order: Not specified");
+	        	            }
+
+	        	            //current time and date
+	        	            JLabel currentDateLabel = new JLabel();
+	        	            pOrder.add(currentDateLabel);
+	        	            currentDateLabel.setBounds(20, 75, 500, 30);
+	        	            currentDateLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+
+	        	            // Get the current date and time
+	        	            Date currentDate = new Date();
+	        	            SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+	        	            String formattedDate = dateFormat.format(currentDate);
+	        	            currentDateLabel.setText("Date: " + formattedDate);
+
+	        	            JLabel address = new JLabel();
+	        	            pOrder.add(address);
+	        	            address.setBounds(20, 20, 500, 200);
+	        	            address.setText("Address: Qingce Village, Kannazuka, Mondstadt, 69420");
+	        	            address.setFont(new Font ("Times New Roman", Font.PLAIN, 13));
+
+	        	            JLabel line = new JLabel();
+	        	            pOrder.add(line);
+	        	            line.setBounds(20, 40, 500, 200);
+	        	            line.setText("-------------------------------------------------------------------------------");
+	        	            line.setFont(new Font ("Times New Roman", Font.PLAIN, 13));
+
+	        	            JLabel receipt = new JLabel();
+	        	            pOrder.add(receipt);
+	        	            receipt.setBounds(115, 70, 500, 200);
+	        	            receipt.setText("RECEIPT");
+	        	            receipt.setFont(new Font ("Times New Roman", Font.PLAIN, 30));
+	        	            
+	        	            JLabel line2 = new JLabel();
+	        	            pOrder.add(line2);
+	        	            line2.setBounds(20, 95, 500, 200);
+	        	            line2.setText("-------------------------------------------------------------------------------");
+	        	            line2.setFont(new Font ("Times New Roman", Font.PLAIN, 13));
+
+	        	            
+	        	            JLabel line3 = new JLabel();
+	        	            pOrder.add(line3);
+	        	            line3.setBounds(20, 150 + (modelList.getSize() * 5), 500, 200);
+	        	            line3.setText("-------------------------------------------------------------------------------");
+	        	            line3.setFont(new Font ("Times New Roman", Font.PLAIN, 13));
+
+	        	            JLabel totalrcpt = new JLabel();
+	        	            pOrder.add(totalrcpt);
+	        	            totalrcpt.setBounds(20, 250 + (modelList.getSize() * 10), 500, 30);
+	        	            totalrcpt.setText("Total............................. " + String.format("%.2f", discountedTotal));	        	            
+	        	            totalrcpt.setFont(new Font ("Times New Roman", Font.BOLD, 25));
+	        	            
+	        	            
+	        	            
+	        	            dialog.add(pOrder);
 	        	            dialog.setUndecorated(true);
 	        	            dialog.setVisible(true);
 	        	        }
